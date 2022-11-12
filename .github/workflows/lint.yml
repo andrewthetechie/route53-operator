@@ -1,9 +1,9 @@
-name: Unit Test Python
+name: Run Linting
 on:
   - push
 jobs:
-  unit-test-python:
-    name: Unit Test Python
+  lint:
+    name: Run Linting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
