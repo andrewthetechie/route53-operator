@@ -1,4 +1,5 @@
 import re
+from typing import Any
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -14,8 +15,17 @@ def is_valid_hostname(hostname):
     return all(allowed.match(x) for x in hostname.split("."))
 
 
-class Record(BaseModel):
+class RecordMutable(BaseModel):
     ttl: int = Field(default=60, description="TTL for the record")
+    value: str = Field(description="Value for this record")
+
+
+class RecordBase(RecordMutable):
+    _record_type: str = Field(None, description="The type of record")
+    _namespace: list[str] = Field(
+        None, description="The namespace for this record, used with the handlers"
+    )
+
     hosted_zone_id: str = Field(description="Route53 Hosted zone ID")
     name: str = Field(description="Name of the record")
 
@@ -24,3 +34,14 @@ class Record(BaseModel):
         if not is_valid_hostname(v):
             raise ValueError("Invalid hostname")
         return v
+
+    @classmethod
+    def from_recordset(
+        cls, hosted_zone_id: str, record_set: dict[str, Any]
+    ) -> "RecordBase":
+        return cls(
+            hosted_zone_id=hosted_zone_id,
+            ttl=record_set["TTL"],
+            name=record_set["Name"],
+            value=record_set["ResourceRecords"][0]["Value"],
+        )
