@@ -1,3 +1,4 @@
+exclude: ^(examples|tests)
 repos:
   - repo: local
     hooks:
