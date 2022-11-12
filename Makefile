@@ -16,6 +16,6 @@ build: ## build python packages
 build-ci: setup build
 
 test: ## Run unit tests
-	pytest
+	poetry run pytest
 
 test-ci: setup test
