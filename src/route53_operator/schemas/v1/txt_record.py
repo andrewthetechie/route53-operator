@@ -2,21 +2,30 @@ from pydantic import constr
 from pydantic import Field
 
 from ...lib.partial import make_optional
-from .._base import RecordBase
-from .._base import RecordMutable
+from ._base import V1RecordBase
+from ._base import V1RecordMutable
 
 
-class TXTRecordMutable(RecordMutable):
+class TXTRecordMutable(V1RecordMutable):
     value: constr(strip_whitespace=True, max_length=255) = Field(
         description="TXT to setup for the record"
     )
 
 
-class TXTRecord(RecordBase, TXTRecordMutable):
+class TXTRecord(V1RecordBase, TXTRecordMutable):
     """A TXT Record"""
 
     _record_type: str = "TXT"
-    _namespace: tuple[str] = ("route53", "v1", "txt")
+    _namespace: tuple[str] = ("route53", "record", "txt")
+    _plural: str = "txt_records"
+    _singular: str = "txt_record"
+    _kind: str = "TXTRecord"
+    _shortnames: list[str] = ["txt"]
+    _served: bool = True
+    _storage: bool = True
+    value: constr(strip_whitespace=True, max_length=255) = Field(
+        description="TXT to setup for the record"
+    )
 
 
 @make_optional

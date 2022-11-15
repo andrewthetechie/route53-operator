@@ -4,19 +4,24 @@ from typing import Any
 from pydantic import Field
 
 from ...lib.partial import make_optional
-from .._base import RecordBase
-from .._base import RecordMutable
+from ._base import V1RecordBase
+from ._base import V1RecordMutable
 
 
-class ARecordMutable(RecordMutable):
+class ARecordMutable(V1RecordMutable):
     value: list[IPv4Address] = Field(description="List of IP addresses for the record")
 
 
-class ARecord(RecordBase, ARecordMutable):
+class ARecord(V1RecordBase, ARecordMutable):
     """An A Record"""
 
     _record_type: str = "A"
-    _namespace: tuple[str] = ("route53", "v1", "a")
+    _namespace: tuple[str] = ("route53", "record", "a")
+    _plural: str = "a_records"
+    _singular: str = "a_record"
+    _kind: str = "ARecord"
+    _shortnames: list[str] = ["a"]
+    value: list[IPv4Address] = Field(description="List of IP addresses for the record")
 
     @classmethod
     def from_recordset(
