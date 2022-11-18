@@ -29,6 +29,7 @@ def new_cluster(tmp_path_factory, worker_id: str | None) -> KindCluster:
     pytest_kind_path.mkdir(exist_ok=True)
     cluster = KindCluster(name=name)
     cluster.path = pytest_kind_path
+    return cluster
 
 
 @pytest.fixture(scope="session")
@@ -37,13 +38,14 @@ def session_kind_cluster(tmp_path_factory, worker_id):
     The upstream kind_cluster fixture blows up with xdist, this works around that issue.
     """
     existing_cluster_name = os.environ.get("R53_OP_TEST_KIND_CLUSTER_NAME", None)
-    if existing_cluster:
+    use_existing_cluster = existing_cluster_name is not None
+    if use_existing_cluster:
         cluster = existing_cluster(existing_cluster_name)
     else:
         cluster = new_cluster(tmp_path_factory, worker_id)
     cluster.create()
     yield cluster
-    if not existing_cluster:
+    if not use_existing_cluster:
         cluster.delete()
 
 
