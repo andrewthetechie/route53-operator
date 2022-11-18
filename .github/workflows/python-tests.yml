@@ -13,6 +13,8 @@ jobs:
         with:
           python-version: 3.10.8
       - name: KinD (Kubernetes in Docker) Action
+        with:
+          skipClusterCreation: true
         uses: engineerd/setup-kind@v0.5.0
       - name: Kubectl tool installer
         uses: Azure/setup-kubectl@v3
