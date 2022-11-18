@@ -43,6 +43,7 @@ pytest-xdist = "^2.5.0"
 tox = "^3.26.0"
 pylint = "^2.13.9"
 bandit = "^1.7.4"
+pytest-kind = "^22.9.0"
 
 [tool.poetry.scripts]
 r53operator = "route53_operator.__main__:cli"
@@ -53,3 +54,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.bandit]
 exclude= "tests/ examples/*"
+
+[tool.pytest.ini_options]
+addopts = "-n auto --ignore examples --cov=src/route53_operator --cov-report=term-missing"

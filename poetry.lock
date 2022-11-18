@@ -782,6 +782,17 @@ py = "*"
 pytest = ">=3.10"
 
 [[package]]
+name = "pytest-kind"
+version = "22.9.0"
+description = "Kubernetes test support with KIND for pytest"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+pykube-ng = ">=0.30"
+
+[[package]]
 name = "pytest-mock"
 version = "3.10.0"
 description = "Thin-wrapper around the mock package for easier use with pytest"
@@ -1146,7 +1157,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "2df8c5e48100a3d9b19362350871664fa797455fcc520fd8362e7442c078711c"
+content-hash = "2628b0b5764374636420708cb5db25298fad5516efe1720a4aa26929900a742a"
 
 [metadata.files]
 aiobotocore = [
@@ -1732,6 +1743,10 @@ pytest-cov = [
 pytest-forked = [
     {file = "pytest-forked-1.4.0.tar.gz", hash = "sha256:8b67587c8f98cbbadfdd804539ed5455b6ed03802203485dd2f53c1422d7440e"},
     {file = "pytest_forked-1.4.0-py3-none-any.whl", hash = "sha256:bbbb6717efc886b9d64537b41fb1497cfaf3c9601276be8da2cccfea5a3c8ad8"},
+]
+pytest-kind = [
+    {file = "pytest-kind-22.9.0.tar.gz", hash = "sha256:e329763bf90f2f6a8ca65f37044f4e61f8437f77c63e2de1d2da23e4e0e99b1a"},
+    {file = "pytest_kind-22.9.0-py3-none-any.whl", hash = "sha256:9a9b693400a60822b10f3419e4f6862b5e85410af4a6780ebf0aea5878e15b26"},
 ]
 pytest-mock = [
     {file = "pytest-mock-3.10.0.tar.gz", hash = "sha256:fbbdb085ef7c252a326fd8cdcac0aa3b1333d8811f131bdcc701002e1be7ed4f"},
