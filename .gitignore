@@ -128,4 +128,4 @@ dmypy.json
 .pyre/
 
 .pytest-kind
-.crd-yaml/*
+.crd_yaml/
