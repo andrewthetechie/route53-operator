@@ -45,6 +45,8 @@ tox = "^3.26.0"
 pylint = "^2.13.9"
 bandit = "^1.7.4"
 pytest-kind = "^22.9.0"
+localstack = "^1.2.0"
+awscli-local = "^0.20"
 
 [tool.poetry.scripts]
 r53operator = "route53_operator.__main__:cli"

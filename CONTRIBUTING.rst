@@ -120,6 +120,19 @@ Tests using k8s are all marked with `k8s`. You can skip them by telling pytest t
 .. _pytest: https://pytest.readthedocs.io/
 
 
+Running the Operator Locally for Development
+--------------------------------------------
+
+You can run the operator locally using localstack to emulate the AWS Route53 API and kind to create a k8s cluster.
+
+The Makefile has a target to make this easier:
+
+.. code:: console
+
+   $ make run-local-operator
+
+
+
 How to submit changes
 ---------------------
 
