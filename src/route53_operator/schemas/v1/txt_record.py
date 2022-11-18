@@ -16,9 +16,9 @@ class TXTRecord(V1RecordBase, TXTRecordMutable):
     """A TXT Record"""
 
     _record_type: str = "TXT"
-    _namespace: tuple[str] = ("route53", "record", "txt")
-    _plural: str = "txt_records"
-    _singular: str = "txt_record"
+    _namespace: tuple[str] = ("dns", "route53", "txt-records")
+    _plural: str = "txt-records"
+    _singular: str = "txt-record"
     _kind: str = "TXTRecord"
     _shortnames: list[str] = ["txt"]
     _served: bool = True

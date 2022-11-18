@@ -26,6 +26,6 @@ class CNAMERecordCRD(CRDBase):
             plural=V1ACNAMERecord._plural,
             singular=V1ACNAMERecord._singular,
             kind=V1ACNAMERecord._kind,
-            shortnames=V1ACNAMERecord._shortnames,
+            short_names=V1ACNAMERecord._shortnames,
         ),
     )

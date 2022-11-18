@@ -21,9 +21,9 @@ class CNAMERecord(V1RecordBase, CNAMERecordMutable):
     """A CNAME Record"""
 
     _record_type: str = "CNAME"
-    _namespace: tuple[str] = ("route53", "record", "cname")
-    _plural: str = "cname_records"
-    _singular: str = "cname_record"
+    _namespace: tuple[str] = ("dns", "route53", "cname-records")
+    _plural: str = "cname-records"
+    _singular: str = "cname-record"
     _kind: str = "CNAMERecord"
     _shortnames: list[str] = ["cname"]
     _served: bool = True

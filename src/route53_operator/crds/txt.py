@@ -24,6 +24,6 @@ class TXTRecordCRD(CRDBase):
             plural=TXTRecord._plural,
             singular=TXTRecord._singular,
             kind=TXTRecord._kind,
-            shortnames=TXTRecord._shortnames,
+            short_names=TXTRecord._shortnames,
         ),
     )

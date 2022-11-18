@@ -11,7 +11,6 @@ RecordBaseT = TypeVar("RecordBase")
 def get_crd_properties(
     schema: RecordBaseT, remove_fields: tuple[str] = ()
 ) -> dict[str, Any]:
-    # TODO: WRite a method that can turn the schema.schema() into what the CRD wants
     strip_from_schema = ("title", "description")
     to_return = {}
     for key, value in schema.schema()["properties"].items():
@@ -65,7 +64,7 @@ class CRDVersion(CRDModel):
     additional_printer_columns: list[CRDPrinterColumns] = []
 
     def to_crd(self):
-        return {
+        to_return = {
             "name": self.name,
             "served": self.served,
             "storage": self.storage,
@@ -81,17 +80,24 @@ class CRDVersion(CRDModel):
                     },
                 }
             },
-            "additionalPrinterColumns": [
-                column.to_crd() for column in self.additional_printer_columns
-            ],
         }
+        if len(self.additional_printer_columns) > 0:
+            to_return["additionalPrinterColumns"] = [
+                column.to_crd() for column in self.additional_printer_columns
+            ]
+        return to_return
 
 
 class CRDNames(CRDModel):
     plural: str
     singular: str
     kind: str
-    shortnames: list[str]
+    short_names: list[str]
+
+    def to_crd(self):
+        dict = self.dict()
+        dict["shortNames"] = dict.pop("short_names")
+        return dict
 
 
 class CRDSpec(CRDModel):
@@ -112,6 +118,14 @@ class CRDSpec(CRDModel):
 class CRDMetadata(CRDModel):
     name: str
     labels: list[str | None] = []
+
+    def to_crd(self) -> dict[str, str | list[str | None]]:
+        to_return = {
+            "name": self.name,
+        }
+        if len(self.labels) > 0:
+            to_return["labels"] = self.labels
+        return to_return
 
 
 class CRDBase(CRDModel):

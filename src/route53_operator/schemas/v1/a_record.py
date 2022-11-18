@@ -16,9 +16,9 @@ class ARecord(V1RecordBase, ARecordMutable):
     """An A Record"""
 
     _record_type: str = "A"
-    _namespace: tuple[str] = ("route53", "record", "a")
-    _plural: str = "a_records"
-    _singular: str = "a_record"
+    _namespace: tuple[str] = ("dns", "route53", "a-records")
+    _plural: str = "a-records"
+    _singular: str = "a-record"
     _kind: str = "ARecord"
     _shortnames: list[str] = ["a"]
     value: list[IPv4Address] = Field(description="List of IP addresses for the record")

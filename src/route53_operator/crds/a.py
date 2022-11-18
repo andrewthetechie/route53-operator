@@ -24,6 +24,6 @@ class ARecordCRD(CRDBase):
             plural=V1ARecord._plural,
             singular=V1ARecord._singular,
             kind=V1ARecord._kind,
-            shortnames=V1ARecord._shortnames,
+            short_names=V1ARecord._shortnames,
         ),
     )
