@@ -4,6 +4,8 @@ from filelock import FileLock, Timeout
 from datetime import datetime
 import os
 from pathlib import Path
+from route53_operator.crds import CRDS
+import yaml
 
 
 def existing_cluster(cluster_name: str) -> KindCluster:
@@ -30,6 +32,20 @@ def new_cluster(tmp_path_factory, worker_id: str | None) -> KindCluster:
     cluster = KindCluster(name=name)
     cluster.path = pytest_kind_path
     return cluster
+
+
+@pytest.fixture(scope="session")
+def crds(tmp_path_factory) -> list[Path]:
+    """Returns a list of paths to CRD files for this operator"""
+    crd_path = tmp_path_factory.getbasetemp().parent / "crds"
+    crd_path.mkdir(exist_ok=True)
+    to_return = []
+    for crd in CRDS:
+        this_crd_path = crd_path / f"{crd.__qualname__.yml}"
+        with open(this_crd_path, "w") as f:
+            f.write(yaml.dump(crd().to_crd()))
+        to_return.append(this_crd_path)
+    return to_return
 
 
 @pytest.fixture(scope="session")
