@@ -49,6 +49,7 @@ labels:
     color: "#336699"
     description: New functionality.
 
+branch_protections:
   # branch protection can only be created for branches that exist.
   - name: main
     # https://docs.github.com/en/rest/reference/repos#update-branch-protection
