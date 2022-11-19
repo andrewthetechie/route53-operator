@@ -31,14 +31,15 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         *,
         hosted_zone_id: str,
         name: str,
+        aws_region: str = "us-east-1",
         aws_session: AioSession | None = None,
     ) -> list[SchemaType] | None:
         if aws_session is None:
-            aws_session = get_session(self._config)
+            aws_session = get_session()
 
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.list_resource_record_sets
         async with aws_session.create_client(
-            "route53", **self._config.aws_client_kwargs
+            "route53", **self._config.aws_client_kwargs, region_name=aws_region
         ) as client:
             response = await client.list_resource_record_sets(
                 HostedZoneId=hosted_zone_id,
@@ -50,12 +51,14 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         if len(record_sets) == 0:
             raise RecordNotFoundError("No records found")
         if (
-            record_sets[0].get("Name", "") != name
+            record_sets[0].get("Name", "") != name + "."
             or record_sets[0].get("Type", "") != self.schema._record_type
         ):
             raise RecordNotFoundError("No records found")
 
-        return self.schema.from_recordset(record_sets[0])
+        return self.schema.from_recordset(
+            hosted_zone_id=hosted_zone_id, record_set=record_sets[0]
+        )
 
     async def create(
         self,
@@ -65,7 +68,7 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
     ) -> SchemaType:
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
-            aws_session = get_session(self._config)
+            aws_session = get_session()
         change_type = "CREATE"
         self._logger.debug(
             "Creating record %s type %s in %s",
@@ -74,23 +77,20 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
             obj_in.hosted_zone_id,
         )
         comment = f"route53-operator creating {obj_in.name} {self.schema._record_type} in {obj_in.hosted_zone_id}"
-        resource_record_set = {
-            "Name": obj_in.name,
-            "Type": self.schema._record_type,
-            "TTL": obj_in.ttl,
-            "ResourceRecords": [{"Value": obj_in.value}],
-        }
+        resource_record_set = obj_in.recordset
         result = await self._change_record_set(
             aws_session=aws_session,
             hosted_zone_id=obj_in.hosted_zone_id,
             change_type=change_type,
             resource_record_set=resource_record_set,
+            aws_region=obj_in.region,
             comment=comment,
         )
         self._logger.debug(result)
         return await self.get(
             hosted_zone_id=obj_in.hosted_zone_id,
             name=obj_in.name,
+            aws_region=obj_in.region,
             aws_session=aws_session,
         )
 
@@ -103,7 +103,7 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
     ) -> SchemaType:
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
-            aws_session = get_session(self._config)
+            aws_session = get_session()
         change_type = "UPSERT"
         self._logger.debug(
             "Upserting record %s type %s in %s",
@@ -127,12 +127,14 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
             hosted_zone_id=obj_current.hosted_zone_id,
             change_type=change_type,
             resource_record_set=resource_record_set,
+            aws_region=obj_current.region,
             comment=comment,
         )
         self._logger.debug(result)
         return await self.get(
             hosted_zone_id=obj_current.hosted_zone_id,
             name=obj_current.name,
+            aws_region=obj_current.region,
             aws_session=aws_session,
         )
 
@@ -141,11 +143,12 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         *,
         hosted_zone_id: str,
         name: str,
+        aws_region: str = "us-east-1",
         aws_session: AioSession | None = None,
     ) -> None:
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
-            aws_session = get_session(self._config)
+            aws_session = get_session()
         change_type = "DELETE"
         self._logger.debug(
             "Deleting record %s type %s in %s", name, type, hosted_zone_id
@@ -161,6 +164,7 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
             change_type=change_type,
             resource_record_set=resource_record_set,
             comment=comment,
+            aws_region=aws_region,
         )
         self._logger.debug(result)
         return
@@ -171,11 +175,12 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         hosted_zone_id: str,
         change_type: str,
         resource_record_set: dict[str, str | bool | dict[str, str | bool]],
+        aws_region: str = "us-east-1",
         comment: str = "",
     ) -> dict[str, str | datetime]:
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         async with aws_session.create_client(
-            "route53", **self._config.aws_client_kwargs
+            "route53", **self._config.aws_client_kwargs, region_name=aws_region
         ) as client:
             response = await client.change_resource_record_sets(
                 HostedZoneId=hosted_zone_id,

@@ -13,43 +13,6 @@ class ACrud(CRUDBase):
     def __init__(self, config: Config, logger: Logger):
         super().__init__(schema=ARecord, config=config, logger=logger)
 
-    async def create(
-        self,
-        *,
-        obj_in: ARecord,
-        aws_session: AioSession | None = None,
-    ) -> ARecord:
-        # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
-        if aws_session is None:
-            aws_session = get_session()
-        change_type = "CREATE"
-        self._logger.debug(
-            "Creating record %s type %s in %s",
-            obj_in.name,
-            self.schema._record_type,
-            obj_in.hosted_zone_id,
-        )
-        comment = f"route53-operator creating {obj_in.name} {self.schema._record_type} in {obj_in.hosted_zone_id}"
-        resource_record_set = {
-            "Name": obj_in.name,
-            "Type": self.schema._record_type,
-            "TTL": obj_in.ttl,
-            "ResourceRecords": [{"Value": value} for value in obj_in.value],
-        }
-        result = await self._change_record_set(
-            aws_session=aws_session,
-            hosted_zone_id=obj_in.hosted_zone_id,
-            change_type=change_type,
-            resource_record_set=resource_record_set,
-            comment=comment,
-        )
-        self._logger.debug(result)
-        return await self.get(
-            hosted_zone_id=obj_in.hosted_zone_id,
-            name=obj_in.name,
-            aws_session=aws_session,
-        )
-
     async def update(
         self,
         *,

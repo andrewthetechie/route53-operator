@@ -6,8 +6,10 @@ from ...schemas.v1 import ARecord
 
 
 @kopf.on.create(ARecord._plural, registry=kopf_registry)
-async def create_a_record(body, logger, patch, **kwargs):
+async def create_a_record(spec, name, namespace, logger, **kwargs):
     crud = ACrud(config=get_config(), logger=logger)
-    obj = await crud.create(obj_in=ARecord(**body))
-    patch.obj = obj.dict()
-    return "Success"
+    print("Creating a record")
+    print(spec)
+    obj = await crud.create(obj_in=ARecord(**spec))
+    print("Done with Create")
+    return {"status": "Success", "obj": obj}

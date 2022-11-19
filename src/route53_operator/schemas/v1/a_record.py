@@ -34,6 +34,10 @@ class ARecord(V1RecordBase, ARecordMutable):
             value=[ip["Value"] for ip in record_set["ResourceRecords"]],
         )
 
+    @property
+    def resource_records(self) -> list[dict[str, str]]:
+        return [{"Value": str(value)} for value in self.value]
+
 
 @make_optional
 class ARecordUpdate(ARecordMutable):

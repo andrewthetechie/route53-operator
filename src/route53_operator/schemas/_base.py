@@ -43,6 +43,7 @@ class RecordBase(RecordMutable):
 
     hosted_zone_id: str = Field(description="Route53 Hosted zone ID")
     name: str = Field(description="Name of the record")
+    region: str = Field("us-east-1", description="Region for the record")
 
     @validator("name")
     def validate_name(cls, v):
@@ -60,3 +61,17 @@ class RecordBase(RecordMutable):
             name=record_set["Name"],
             value=record_set["ResourceRecords"][0]["Value"],
         )
+
+    @property
+    def recordset(self) -> dict[str, str | int | list[dict[str, str]]]:
+        return {
+            "Name": self.name,
+            "Type": self._record_type,
+            "TTL": self.ttl,
+            "Region": self.region,
+            "ResourceRecords": self.resource_records,
+        }
+
+    @property
+    def resource_records(self) -> list[dict[str, str]]:
+        return [{"Value": self.value}]
