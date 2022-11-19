@@ -1,4 +1,4 @@
-
+CLUSTER_NAME="r53op-testing"
 .DEFAULT_GOAL := help
 
 help:
@@ -19,3 +19,6 @@ test: ## Run unit tests
 	poetry run pytest
 
 test-ci: setup test
+
+run-local-operator: setup ## Run the operator locally using kind
+	scripts/run_local_operator.sh
