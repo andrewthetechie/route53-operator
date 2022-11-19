@@ -61,13 +61,6 @@ branch_protections:
         required_approving_review_count: 1
         # Dismiss approved reviews automatically when a new commit is pushed.
         dismiss_stale_reviews: true
-      # Require status checks to pass before merging.
-      required_status_checks:
-        strict: true
-        checks:
-          - Run Linting
-          - Build Docker Image
-          - Unit Test Python
       enforce_admins: false
       # Prevent merge commits from being pushed to matching branches
       require_linear_history: true
