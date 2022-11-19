@@ -1,3 +1,7 @@
+"""Writes the CRD objects for the Route53 Operator to yaml files.
+
+Used as part of running the operator locally and as part of the process to create the helm charts
+"""
 from pathlib import Path
 from sys import argv
 from sys import exit

@@ -1,3 +1,4 @@
+"""Schemas for A Records"""
 from ipaddress import IPv4Address
 from typing import Any
 
@@ -9,6 +10,8 @@ from ._base import V1RecordMutable
 
 
 class ARecordMutable(V1RecordMutable):
+    """The mutable fields for an A Record"""
+
     value: list[IPv4Address] = Field(description="List of IP addresses for the record")
 
 
@@ -27,6 +30,7 @@ class ARecord(V1RecordBase, ARecordMutable):
     def from_recordset(
         cls, hosted_zone_id: str, record_set: dict[str, Any]
     ) -> "ARecord":
+        """Convert a record set from the AWS API to aa A Record"""
         return cls(
             hosted_zone_id=hosted_zone_id,
             ttl=record_set["TTL"],
@@ -36,9 +40,12 @@ class ARecord(V1RecordBase, ARecordMutable):
 
     @property
     def resource_records(self) -> list[dict[str, str]]:
+        """The ResourceRecords (from RecordSet) for this A record"""
         return [{"Value": str(value)} for value in self.value]
 
 
 @make_optional
 class ARecordUpdate(ARecordMutable):
+    """The schema used when updating an A Record, makes all Mutable fields optional"""
+
     pass

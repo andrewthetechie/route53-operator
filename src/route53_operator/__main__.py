@@ -1,3 +1,4 @@
+"""This is our poetry entrypoint, run with r53operator. It loads the kopf handlers and registry and starts the kopf operator"""
 import asyncio
 import logging
 
@@ -6,11 +7,6 @@ import uvloop
 from . import handlers  # noqa: F401
 from . import kopf
 from . import kopf_registry
-
-
-@kopf.on.login(registry=kopf_registry)
-def login_fn(**kwargs):
-    return kopf.login_via_pykube(**kwargs)
 
 
 def cli(args=None):

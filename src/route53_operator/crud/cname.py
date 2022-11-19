@@ -6,5 +6,9 @@ from ._base import CRUDBase
 
 
 class CNAMECrud(CRUDBase):
+    """
+    A CRUD for CNAME Records
+    """
+
     def __init__(self, config: Config, logger: Logger):
         super().__init__(schema=CNAMERecord, config=config, logger=logger)

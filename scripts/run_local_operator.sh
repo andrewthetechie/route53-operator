@@ -1,5 +1,7 @@
 #!/bin/bash
-
+# Script used to run the operator locally.
+# Starts a cluster in kind, starts localstack for AWS emulation, and starts the operator with env vars so it uses localstack and the kind k8s cluster
+# The Trap will cleanup the cluster and localstack when the script exits.
 set -e
 function cleanup {
     echo "Deleting kind cluster and stopping localstack"
