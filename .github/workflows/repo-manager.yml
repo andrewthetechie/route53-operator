@@ -1,0 +1,24 @@
+# Sets repo settings from github actions
+# Uses the yaml file .github/settings.yml to set settings on the repo
+# Runs on dispatch and on a cron schedule every day at midnight
+name: Repo Manager
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  repo-manager:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout
+      - name: Run RepoManager Master Settings
+        uses: andrewthetechie/gha-repo-manager@v1.2.1
+        with:
+          # Apply your settings to the repo, can also be check to just check repo settings vs your file or validate, to validate your
+          # file is valid
+          action: apply
+          settings_file: .github/settings.yml
+          # need a PAT that can edit repo settings
+          token: ${{ secrets.THIS_PAT }}
