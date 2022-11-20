@@ -44,7 +44,7 @@ RUN --mount=type=cache,uid=1000,gid=1000,target=/home/op/.cache/pip pip install 
 
 # use distroless/cc as the base for our final image
 # lots of python depends on glibc
-FROM gcr.io/distroless/cc-debian11:debug
+FROM gcr.io/distroless/cc-debian11
 
 # Copy python from the python-builder
 # this carries more risk than installing it fully, but makes the image a lot smaller
