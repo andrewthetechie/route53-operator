@@ -1,3 +1,4 @@
+"""TXT Record CRD"""
 from ..schemas.v1 import TXTRecord as TXTRecord
 from ._base import CRDBase
 from ._base import CRDMetadata
@@ -8,6 +9,10 @@ from ._base import CRDVersion
 
 
 class TXTRecordCRD(CRDBase):
+    """
+    CRD for a TXT Record
+    """
+
     metadata: CRDMetadata = CRDMetadata(name=".".join(reversed(TXTRecord._namespace)))
     spec: CRDSpec = CRDSpec(
         group=".".join(tuple(reversed(TXTRecord._namespace))[-2:]),

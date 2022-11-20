@@ -1,3 +1,4 @@
+"""base CRUD class that implements the CRUD interface"""
 from datetime import datetime
 from logging import Logger
 from typing import Generic
@@ -18,6 +19,10 @@ T = TypeVar("T", bound=RecordBase)
 
 
 class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
+    """
+    CRUDBase can be used to implement a CRUD interface for any model.
+    """
+
     def __init__(self, schema: type[SchemaType], config: Config, logger: Logger):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
@@ -33,7 +38,24 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         name: str,
         aws_region: str = "us-east-1",
         aws_session: AioSession | None = None,
-    ) -> list[SchemaType] | None:
+    ) -> SchemaType:
+        """
+        Get an AWS record by name and hosted zone id.
+
+        Uses list_resource_record_sets to look up the record from the AWS API.
+
+        Args:
+            hosted_zone_id (str): The Route53 hosted zone id to search in
+            name (str): Name of the DNS Record to get
+            aws_region (str, optional): AWS Rregion. Defaults to "us-east-1".
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+
+        Raises:
+            RecordNotFoundError: Raised when the record is not found
+
+        Returns:
+            SchemaType: A pydantic model of the record
+        """
         if aws_session is None:
             aws_session = get_session()
 
@@ -63,92 +85,124 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
     async def create(
         self,
         *,
-        obj_in: CreateSchemaType | SchemaType,
+        record_in: CreateSchemaType | SchemaType,
         aws_session: AioSession | None = None,
     ) -> SchemaType:
+        """
+        Create a new record Route53 record.
+
+        Args:
+            record_in (CreateSchemaType | SchemaType): The record to create
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+
+        Returns:
+            SchemaType: A pydantic model of the record
+        """
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
             aws_session = get_session()
         change_type = "CREATE"
         self._logger.debug(
             "Creating record %s type %s in %s",
-            obj_in.name,
+            record_in.name,
             self.schema._record_type,
-            obj_in.hosted_zone_id,
+            record_in.hosted_zone_id,
         )
-        comment = f"route53-operator creating {obj_in.name} {self.schema._record_type} in {obj_in.hosted_zone_id}"
-        resource_record_set = obj_in.recordset
+        comment = f"route53-operator creating {record_in.name} {self.schema._record_type} in {record_in.hosted_zone_id}"
+        resource_record_set = record_in.recordset
         result = await self._change_record_set(
             aws_session=aws_session,
-            hosted_zone_id=obj_in.hosted_zone_id,
+            hosted_zone_id=record_in.hosted_zone_id,
             change_type=change_type,
             resource_record_set=resource_record_set,
-            aws_region=obj_in.region,
+            aws_region=record_in.region,
             comment=comment,
         )
         self._logger.debug(result)
         return await self.get(
-            hosted_zone_id=obj_in.hosted_zone_id,
-            name=obj_in.name,
-            aws_region=obj_in.region,
+            hosted_zone_id=record_in.hosted_zone_id,
+            name=record_in.name,
+            aws_region=record_in.region,
             aws_session=aws_session,
         )
 
     async def update(
         self,
         *,
-        obj_current: SchemaType,
-        obj_new: UpdateSchemaType | SchemaType,
+        record_current: SchemaType,
+        record_update: UpdateSchemaType | SchemaType,
         aws_session: AioSession | None = None,
     ) -> SchemaType:
+        """
+        Update a route53 record.
+
+        Args:
+            record_current (SchemaType): The current record
+            record_update (UpdateSchemaType | SchemaType): The updates to the record
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+
+        Returns:
+            SchemaType: A pydantic model of the record
+        """
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
             aws_session = get_session()
         change_type = "UPSERT"
         self._logger.debug(
             "Upserting record %s type %s in %s",
-            obj_current.name,
+            record_current.name,
             self.schema._record_type,
-            obj_current.hosted_zone_id,
+            record_current.hosted_zone_id,
         )
-        comment = f"route53-operator upserting {obj_current.name} {self.schema._record_type} in {obj_current.hosted_zone_id}"
+        comment = (
+            f"route53-operator upserting {record_current.name} "
+            f"{self.schema._record_type} in {record_current.hosted_zone_id}"
+        )
         resource_record_set = {
-            "Name": obj_current.name,
+            "Name": record_current.name,
             "Type": self.schema._record_type,
         }
-        new_ttl = getattr(obj_new, "ttl", None)
+        new_ttl = getattr(record_update, "ttl", None)
         if new_ttl is not None:
             resource_record_set["TTL"] = new_ttl
-        new_value = getattr(obj_new, "value", None)
+        new_value = getattr(record_update, "value", None)
         if new_value is not None:
             resource_record_set["ResourceRecords"] = [{"Value": new_value}]
         result = await self._change_record_set(
             aws_session=aws_session,
-            hosted_zone_id=obj_current.hosted_zone_id,
+            hosted_zone_id=record_current.hosted_zone_id,
             change_type=change_type,
             resource_record_set=resource_record_set,
-            aws_region=obj_current.region,
+            aws_region=record_current.region,
             comment=comment,
         )
         self._logger.debug(result)
         return await self.get(
-            hosted_zone_id=obj_current.hosted_zone_id,
-            name=obj_current.name,
-            aws_region=obj_current.region,
+            hosted_zone_id=record_current.hosted_zone_id,
+            name=record_current.name,
+            aws_region=record_current.region,
             aws_session=aws_session,
         )
 
     async def remove(
         self,
         *,
-        hosted_zone_id: str,
-        name: str,
-        aws_region: str = "us-east-1",
+        record_in: SchemaType,
         aws_session: AioSession | None = None,
     ) -> None:
+        """
+        Remove a route53 record.
+
+        Args:
+            record_in (SchemaType): The record to remove
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+        """
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
             aws_session = get_session()
+        name = record_in.name
+        hosted_zone_id = record_in.hosted_zone_id
+        aws_region = record_in.region
         change_type = "DELETE"
         self._logger.debug(
             "Deleting record %s type %s in %s", name, type, hosted_zone_id
@@ -178,6 +232,20 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         aws_region: str = "us-east-1",
         comment: str = "",
     ) -> dict[str, str | datetime]:
+        """
+        Uses botocore change_resource_record_sets to update a route53 record using the AWS API.
+
+        Args:
+            aws_session (AioSession): The Aiobotocore session to use with the AWS API
+            hosted_zone_id (str): The Route53 hosted zone id
+            change_type (str): The changetype, one of
+            resource_record_set (dict[str, str  |  bool  |  dict[str, str  |  bool]]): _description_
+            aws_region (str, optional): _description_. Defaults to "us-east-1".
+            comment (str, optional): _description_. Defaults to "".
+
+        Returns:
+            dict[str, str | datetime]: the ChangeInfo from the AWS API
+        """
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         async with aws_session.create_client(
             "route53", **self._config.aws_client_kwargs, region_name=aws_region

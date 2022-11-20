@@ -1,3 +1,4 @@
+"""Config for the Operator"""
 import os
 from functools import lru_cache
 
@@ -8,7 +9,10 @@ from pydantic import Field
 
 
 class Config(BaseSettings):
-    """Configuration for the operator."""
+    """Configuration for the operator.
+
+    Uses a Pydantic BaseSettings object to read the settings from the environment.
+    """
 
     # AWS variables
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html
@@ -53,6 +57,12 @@ class Config(BaseSettings):
 
     @property
     def aws_client_kwargs(self) -> dict[str, str | bool | AnyUrl | AioConfig]:
+        """
+        Convert our config settings into keyword arguments for creating an Aiobotocore AWS client
+
+        Returns:
+            dict[str, str | bool | AnyUrl | AioConfig]: A dictionary of keyword arguments
+        """
         # https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html
         to_return = {}
         session_vars = [
@@ -87,6 +97,15 @@ def get_config() -> Config:
 
 
 def _build_botoconfig(config: "Config") -> AioConfig:
+    """
+    Converts config settings into a botoconfig object
+
+    Args:
+        config (Config): The config to convert
+
+    Returns:
+        AioConfig: An AioBotocore config object
+    """
     config_kwargs = {}
     config_vars = [
         "aws_user_agent",

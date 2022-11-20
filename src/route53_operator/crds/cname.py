@@ -1,3 +1,4 @@
+"""CRD for a CNAME"""
 from ..schemas.v1 import CNAMERecord as V1ACNAMERecord
 from ._base import CRDBase
 from ._base import CRDMetadata
@@ -8,6 +9,10 @@ from ._base import CRDVersion
 
 
 class CNAMERecordCRD(CRDBase):
+    """
+    CRD for a CNAME
+    """
+
     metadata: CRDMetadata = CRDMetadata(
         name=".".join(reversed(V1ACNAMERecord._namespace))
     )

@@ -7,6 +7,8 @@ from ._base import V1RecordMutable
 
 
 class TXTRecordMutable(V1RecordMutable):
+    """The mutable fields for a TXT Record"""
+
     value: constr(strip_whitespace=True, max_length=255) = Field(
         description="TXT to setup for the record"
     )
@@ -30,4 +32,6 @@ class TXTRecord(V1RecordBase, TXTRecordMutable):
 
 @make_optional
 class TXTRecordUpdate(TXTRecordMutable):
+    """The update schema for a TXT. Makes all mutable fields optional"""
+
     pass

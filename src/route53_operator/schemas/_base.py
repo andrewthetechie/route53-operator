@@ -1,3 +1,4 @@
+"""Base schemas are parent classes for other Record schemas"""
 import re
 from typing import Any
 
@@ -8,6 +9,7 @@ from pydantic import validator
 
 
 def is_valid_hostname(hostname):
+    """Uses regex to validate a hostname"""
     if len(hostname) > 255:
         return False
     if hostname[-1] == ".":
@@ -17,6 +19,11 @@ def is_valid_hostname(hostname):
 
 
 class RecordMutable(BaseModel):
+    """Mutable fields for a record
+
+    These are the fields that can be changed after a record is created.
+    """
+
     ttl: conint(ge=0, le=2147483647) = Field(
         default=60, description="TTL for the record"
     )
@@ -24,6 +31,10 @@ class RecordMutable(BaseModel):
 
 
 class RecordBase(RecordMutable):
+    """
+    Base class for all record schemas
+    """
+
     _record_type: str = Field(None, description="The type of record")
     _version: str = Field(None, description="The version of the record")
     _namespace: list[str] = Field(
@@ -47,6 +58,7 @@ class RecordBase(RecordMutable):
 
     @validator("name")
     def validate_name(cls, v):
+        """Validates that the record name is a valid hostname"""
         if not is_valid_hostname(v):
             raise ValueError("Invalid hostname")
         return v
@@ -55,6 +67,7 @@ class RecordBase(RecordMutable):
     def from_recordset(
         cls, hosted_zone_id: str, record_set: dict[str, Any]
     ) -> "RecordBase":
+        """Convert a record set from the AWS API to a RecordObject"""
         return cls(
             hosted_zone_id=hosted_zone_id,
             ttl=record_set["TTL"],
@@ -64,6 +77,7 @@ class RecordBase(RecordMutable):
 
     @property
     def recordset(self) -> dict[str, str | int | list[dict[str, str]]]:
+        """Express this Record object as an AWS Recordset dictionary"""
         return {
             "Name": self.name,
             "Type": self._record_type,
@@ -74,4 +88,5 @@ class RecordBase(RecordMutable):
 
     @property
     def resource_records(self) -> list[dict[str, str]]:
+        """The ResourceRecords (from RecordSet) for this record"""
         return [{"Value": self.value}]

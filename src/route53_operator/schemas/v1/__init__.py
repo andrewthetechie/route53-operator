@@ -1,3 +1,4 @@
+"""V1 schemeas for records"""
 from .a_record import ARecord
 from .a_record import ARecordUpdate
 from .cname_record import CNAMERecord

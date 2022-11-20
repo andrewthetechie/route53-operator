@@ -1,3 +1,4 @@
+"""CRD for an A Record"""
 from ..schemas.v1 import ARecord as V1ARecord
 from ._base import CRDBase
 from ._base import CRDMetadata
@@ -8,6 +9,10 @@ from ._base import CRDVersion
 
 
 class ARecordCRD(CRDBase):
+    """
+    CRD for an A Record
+    """
+
     metadata: CRDMetadata = CRDMetadata(name=".".join(reversed(V1ARecord._namespace)))
     spec: CRDSpec = CRDSpec(
         group=".".join(tuple(reversed(V1ARecord._namespace))[-2:]),
