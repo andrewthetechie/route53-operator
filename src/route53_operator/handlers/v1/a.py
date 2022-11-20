@@ -1,6 +1,6 @@
 """Handlers for A Records"""
+from logging import Logger
 from typing import Any
-from typing import Logger
 
 from ... import kopf
 from ... import kopf_registry
