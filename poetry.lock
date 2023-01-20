@@ -1857,14 +1857,14 @@ pytest = ">=3.10"
 
 [[package]]
 name = "pytest-kind"
-version = "22.9.0"
+version = "22.11.1"
 description = "Kubernetes test support with KIND for pytest"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-kind-22.9.0.tar.gz", hash = "sha256:e329763bf90f2f6a8ca65f37044f4e61f8437f77c63e2de1d2da23e4e0e99b1a"},
-    {file = "pytest_kind-22.9.0-py3-none-any.whl", hash = "sha256:9a9b693400a60822b10f3419e4f6862b5e85410af4a6780ebf0aea5878e15b26"},
+    {file = "pytest-kind-22.11.1.tar.gz", hash = "sha256:ae7a4c753fcbbf9e44a0cc587d5219a0b8b2b1e7bcc9cbe14234f745dd5db681"},
+    {file = "pytest_kind-22.11.1-py3-none-any.whl", hash = "sha256:35fd99e4f94e0374834b5893ee4a95e33ad5dc1c18080356f01fadf21224e830"},
 ]
 
 [package.dependencies]
@@ -2676,4 +2676,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7c2c6b266b913e58cd8becd7e41544f0151c5245c38463728c97afed624e2f1b"
+content-hash = "b20db41fb6fbeec259e760d702abf4c9cced2d2df3e2e17aff8b665d99bf110d"
