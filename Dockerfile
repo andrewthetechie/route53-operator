@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye as wheel-builder
+FROM python:3.11-slim-bullseye as wheel-builder
 
 ADD src /src
 ADD poetry.lock /poetry.lock
@@ -11,7 +11,7 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install --upgrade pip twine b
 RUN --mount=type=cache,target=/root/.cache/pip python -m build --sdist --wheel --outdir /dist/
 RUN twine check /dist/*
 
-FROM python:3.10-slim-bullseye as python-base
+FROM python:3.11-slim-bullseye as python-base
 
 # Update the base image
 RUN apt-get update && apt-get upgrade -y
@@ -80,16 +80,15 @@ RUN rm /bin/sh /bin/echo /bin/rm
 USER op
 
 # Add /lib/libs to our path
-ENV LD_LIBRARY_PATH="/lib/libs:${LD_LIBRARY_PATH}"
+ENV LD_LIBRARY_PATH="/lib/libs:${LD_LIBRARY_PATH}" \
 # Add the app path to our path
-ENV PATH="/app/bin:${PATH}"
+    PATH="/app/bin:${PATH}" \
 # Add the app path to your python path
-ENV PYTHONPATH="/app:${PYTHONPATH}"
+    PYTHONPATH="/app:${PYTHONPATH}" \
 # standardise on locale, don't generate .pyc, enable tracebacks on seg faults
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONFAULTHANDLER 1
-
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONFAULTHANDLER=1
 
 ENTRYPOINT ["r53operator"]
