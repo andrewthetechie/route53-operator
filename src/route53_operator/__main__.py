@@ -1,4 +1,5 @@
-"""This is our poetry entrypoint, run with r53operator. It loads the kopf handlers and registry and starts the kopf operator"""
+"""This is our poetry entrypoint, run with r53operator. It loads the kopf handlers and
+registry and starts the kopf operator"""
 import logging
 
 from . import handlers  # noqa: F401

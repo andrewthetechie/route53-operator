@@ -20,32 +20,21 @@ class Config(BaseSettings):
     aws_access_key_id: str | None = Field(None, description="AWS Access Key ID")
     aws_secret_access_key: str | None = Field(None, description="AWS Secret Access Key")
     aws_session_token: str | None = Field(None, description="AWS Session Token")
-    aws_user_agent: str | None = Field(
-        "route53-operator", description="User agent for AWS requests"
-    )
-    aws_user_agent_append: str | None = Field(
-        None, description="A string to append to the default default user agent"
-    )
+    aws_user_agent: str | None = Field("route53-operator", description="User agent for AWS requests")
+    aws_user_agent_append: str | None = Field(None, description="A string to append to the default default user agent")
     aws_proxies: dict[str, AnyUrl] | None = Field(
         None,
-        description="Proxies to use for AWS requests. e.g.: {'http': 'foo.bar:3128', 'http://hostname': 'foo.bar:4012'}",
+        description="Proxies to use for AWS requests. e.g.:"
+        + "{'http': 'foo.bar:3128', 'http://hostname': 'foo.bar:4012'}",
     )
-    aws_proxy_ca_bundle: str | None = Field(
-        None, description="Path to a CA bundle to use for AWS requests"
-    )
-    aws_proxy_client_cert: str | None = Field(
-        None, description="Path to a client certificate to use for AWS requests"
-    )
+    aws_proxy_ca_bundle: str | None = Field(None, description="Path to a CA bundle to use for AWS requests")
+    aws_proxy_client_cert: str | None = Field(None, description="Path to a client certificate to use for AWS requests")
     aws_proxy_use_forwarding_for_https: bool | None = Field(
         None, description="Whether to use the X-Forwarded-For header for HTTPS requests"
     )
-    aws_client_cert: str | None = Field(
-        None, description="Path to a client certificate to use for AWS requests"
-    )
+    aws_client_cert: str | None = Field(None, description="Path to a client certificate to use for AWS requests")
     aws_use_ssl: bool = Field(True, description="Whether to use SSL for AWS requests")
-    aws_verify_ssl: bool = Field(
-        True, description="Whether to verify SSL certificates for AWS requests"
-    )
+    aws_verify_ssl: bool = Field(True, description="Whether to verify SSL certificates for AWS requests")
     aws_endpoint_url: AnyUrl | None | None = Field(
         None, description="The complete URL to use for the constructed client."
     )
@@ -78,6 +67,7 @@ class Config(BaseSettings):
         for value in ["aws_use_ssl", "aws_endpoint_url"]:
             if getattr(self, value) is not None:
                 to_return[value.lstrip("aws_")] = getattr(self, value)
+        to_return["region_name"] = self.aws_region
         to_return["config"] = _build_botoconfig(self)
         return to_return
 
