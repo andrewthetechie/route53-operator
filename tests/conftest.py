@@ -17,8 +17,11 @@ import tempfile
 from contextlib import ExitStack
 from itertools import chain
 from unittest.mock import patch
-
+import os
+import pytest_asyncio
+import docker
 import aiohttp
+from aiobotocore.session import get_session
 
 
 import aiobotocore.session
@@ -306,3 +309,51 @@ async def exit_stack():
 
 
 pytest_plugins = ["tests.mock_server"]
+
+
+@pytest_asyncio.fixture(scope="session", name="ls_container")
+def create_localstack_container(unused_tcp_port_factory):
+    """Runs a localstack container for use with testing"""
+    import time
+
+    port1 = unused_tcp_port_factory()
+    port2 = unused_tcp_port_factory()
+    try:
+        client = docker.from_env()
+        container = client.containers.run(
+            f"localstack/localstack:{os.environ.get('LOCALSTACK_IMAGE_TAG', 'latest')}",
+            ports={"4566/tcp": port1, "4571/tcp": port2},
+            detach=True,
+        )
+        time.sleep(1)
+        yield {"endpoint_url": f"http://localhost:{port1}/", "port_2": port2}
+    finally:
+        container.remove(force=True)
+
+
+@pytest_asyncio.fixture(name="ls_session")
+async def create_ls_session_and_client_args(test_config, ls_container) -> dict:
+    endpoint_url = ls_container["endpoint_url"]
+    session = get_session()
+    test_config.aws_use_ssl = False
+    test_config.aws_endpoint_url = endpoint_url
+    yield {"session": session, "config": test_config}
+
+
+@pytest_asyncio.fixture(name="ls_zone")
+async def create_localstack_hosted_zone(ls_session):
+    """Creates a hosted zone in localstack for use with testing"""
+    session = ls_session["session"]
+
+    zone_name = f"{''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=8))}.com"
+    async with session.create_client("route53", **ls_session["config"].aws_client_kwargs) as client:
+        response = await client.create_hosted_zone(
+            Name=zone_name,
+            CallerReference="".join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=8)),
+        )
+        yield {
+            "zone_id": response["HostedZone"]["Id"],
+            "name": response["HostedZone"]["Name"],
+            "session": session,
+            "config": ls_session["config"],
+        }

@@ -67,6 +67,7 @@ class Config(BaseSettings):
         for value in ["aws_use_ssl", "aws_endpoint_url"]:
             if getattr(self, value) is not None:
                 to_return[value.lstrip("aws_")] = getattr(self, value)
+        to_return["region_name"] = self.aws_region
         to_return["config"] = _build_botoconfig(self)
         return to_return
 
