@@ -28,7 +28,8 @@ class ACrud(CRUDBase):
         Args:
             record_current (SchemaType): The current record
             record_update (UpdateSchemaType | SchemaType): The updates to the record
-            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None.
+                If None, will create a session
 
         Returns:
             ARecord: A pydantic model of the Route53 A Record

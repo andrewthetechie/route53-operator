@@ -48,7 +48,8 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
             hosted_zone_id (str): The Route53 hosted zone id to search in
             name (str): Name of the DNS Record to get
             aws_region (str, optional): AWS Rregion. Defaults to "us-east-1".
-            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None.
+                If None, will create a session
 
         Raises:
             RecordNotFoundError: Raised when the record is not found
@@ -93,7 +94,8 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
 
         Args:
             record_in (CreateSchemaType | SchemaType): The record to create
-            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None.
+                If None, will create a session
 
         Returns:
             SchemaType: A pydantic model of the record
@@ -139,7 +141,8 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
         Args:
             record_current (SchemaType): The current record
             record_update (UpdateSchemaType | SchemaType): The updates to the record
-            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None.
+                If None, will create a session
 
         Returns:
             SchemaType: A pydantic model of the record
@@ -195,7 +198,8 @@ class CRUDBase(Generic[SchemaType, CreateSchemaType, UpdateSchemaType]):
 
         Args:
             record_in (SchemaType): The record to remove
-            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None. If None, will create a session
+            aws_session (AioSession | None, optional): An AIOSession object. Defaults to None.
+                If None, will create a session
         """
         # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53.html#Route53.Client.change_resource_record_sets
         if aws_session is None:
