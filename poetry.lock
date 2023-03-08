@@ -2,25 +2,25 @@
 
 [[package]]
 name = "aiobotocore"
-version = "2.4.2"
+version = "2.5.0"
 description = "Async client for aws services using botocore and aiohttp"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "aiobotocore-2.4.2-py3-none-any.whl", hash = "sha256:4acd1ebe2e44be4b100aa553910bda899f6dc090b3da2bc1cf3d5de2146ed208"},
-    {file = "aiobotocore-2.4.2.tar.gz", hash = "sha256:0603b74a582dffa7511ce7548d07dc9b10ec87bc5fb657eb0b34f9bd490958bf"},
+    {file = "aiobotocore-2.5.0-py3-none-any.whl", hash = "sha256:9a2a022d7b78ec9a2af0de589916d2721cddbf96264401b78d7a73c1a1435f3b"},
+    {file = "aiobotocore-2.5.0.tar.gz", hash = "sha256:6a5b397cddd4f81026aa91a14c7dd2650727425740a5af8ba75127ff663faf67"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.3.1"
 aioitertools = ">=0.5.1"
-botocore = ">=1.27.59,<1.27.60"
+botocore = ">=1.29.76,<1.29.77"
 wrapt = ">=1.10.10"
 
 [package.extras]
-awscli = ["awscli (>=1.25.60,<1.25.61)"]
-boto3 = ["boto3 (>=1.24.59,<1.24.60)"]
+awscli = ["awscli (>=1.27.76,<1.27.77)"]
+boto3 = ["boto3 (>=1.26.76,<1.26.77)"]
 
 [[package]]
 name = "aiohttp"
@@ -291,18 +291,18 @@ yaml = ["PyYAML"]
 
 [[package]]
 name = "boto3"
-version = "1.24.59"
+version = "1.26.76"
 description = "The AWS SDK for Python"
 category = "dev"
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "boto3-1.24.59-py3-none-any.whl", hash = "sha256:34ab44146a2c4e7f4e72737f4b27e6eb5e0a7855c2f4599e3d9199b6a0a2d575"},
-    {file = "boto3-1.24.59.tar.gz", hash = "sha256:a50b4323f9579cfe22fcf5531fbd40b567d4d74c1adce06aeb5c95fce2a6fb40"},
+    {file = "boto3-1.26.76-py3-none-any.whl", hash = "sha256:b4c2969b7677762914394b8273cc1905dfe5b71f250741c1a575487ae357e729"},
+    {file = "boto3-1.26.76.tar.gz", hash = "sha256:30c7d967ed1c6b5a05643e42cae9d4d36c3f1cb6782637ddc7007a104cfd9027"},
 ]
 
 [package.dependencies]
-botocore = ">=1.27.59,<1.28.0"
+botocore = ">=1.29.76,<1.30.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.6.0,<0.7.0"
 
@@ -311,14 +311,14 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.27.59"
+version = "1.29.76"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.27.59-py3-none-any.whl", hash = "sha256:69d756791fc024bda54f6c53f71ae34e695ee41bbbc1743d9179c4837a4929da"},
-    {file = "botocore-1.27.59.tar.gz", hash = "sha256:eda4aed6ee719a745d1288eaf1beb12f6f6448ad1fa12f159405db14ba9c92cf"},
+    {file = "botocore-1.29.76-py3-none-any.whl", hash = "sha256:70735b00cd529f152992231ca6757e458e5ec25db43767b3526e9a35b2f143b7"},
+    {file = "botocore-1.29.76.tar.gz", hash = "sha256:c2f67b6b3f8acf2968eafca06526f07b9fb0d27bac4c68a635d51abb675134a7"},
 ]
 
 [package.dependencies]
@@ -327,7 +327,7 @@ python-dateutil = ">=2.1,<3.0.0"
 urllib3 = ">=1.25.4,<1.27"
 
 [package.extras]
-crt = ["awscrt (==0.14.0)"]
+crt = ["awscrt (==0.16.9)"]
 
 [[package]]
 name = "cachetools"
@@ -1261,23 +1261,23 @@ uvloop = ["uvloop"]
 
 [[package]]
 name = "localstack"
-version = "1.3.1"
+version = "1.4.0"
 description = "LocalStack - A fully functional local Cloud stack"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "localstack-1.3.1-py3-none-any.whl", hash = "sha256:40c5b74b058ccbd11480a3e0fc448711ec9167293461394f51f1aa5d5bee8e6f"},
-    {file = "localstack-1.3.1.tar.gz", hash = "sha256:e3eb32654ee84e706d04086a875a482a0496e3440971d67ed62a4f10fb41e6c1"},
+    {file = "localstack-1.4.0-py3-none-any.whl", hash = "sha256:e1ebbef831450151f94c8d76b7c40bf4e336a2698ff4ac6a7634c210d458e6e5"},
+    {file = "localstack-1.4.0.tar.gz", hash = "sha256:d841044cfd5579f10431316ae30de9633b9e4a8fdd6eb6006eba6d7f4f1a3298"},
 ]
 
 [package.dependencies]
 apispec = ">=5.1.1"
-boto3 = ">=1.20,<1.25.0"
+boto3 = ">=1.25.0"
 cachetools = ">=5.0.0,<5.1.0"
 click = ">=7.0"
 localstack-client = ">=1.37"
-localstack-ext = "1.3.1"
+localstack-ext = "1.4.0"
 plux = ">=1.3.1"
 psutil = ">=5.4.8,<6.0.0"
 python-dotenv = ">=0.19.1"
@@ -1289,9 +1289,9 @@ stevedore = ">=3.4.0"
 tailer = ">=0.4.1"
 
 [package.extras]
-dev = ["Cython", "autoflake", "black (==22.3.0)", "coveralls (==3.1.0)", "flake8 (==3.9.2)", "flake8-black (==0.3.2)", "flake8-isort (==5.0.0)", "flake8-quotes (>=0.11.0)", "isort (==5.9.1)", "networkx (>=2.8.4)", "pandoc", "pre-commit (==2.13.0)", "pypandoc", "pyproject-flake8 (==3.9.2)", "rstr (>=3.2.0)"]
-full = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed (==0.5.19)", "amazon-kclpy (>=2.0.6)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.12.13,<1.28.0)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "cryptography", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==5.0.0)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext[runtime] (==1.3.1)", "moto-ext[all] (==4.0.11.post2)", "opensearch-py (==1.1.0)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (==22.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
-runtime = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed (==0.5.19)", "amazon-kclpy (>=2.0.6)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.12.13,<1.28.0)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "cryptography", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==5.0.0)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext[runtime] (==1.3.1)", "moto-ext[all] (==4.0.11.post2)", "opensearch-py (==1.1.0)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (==22.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
+dev = ["Cython", "autoflake", "black (==22.3.0)", "coveralls (==3.1.0)", "flake8 (>=6.0.0)", "flake8-black (>=0.3.6)", "flake8-isort (>=6.0.0)", "flake8-quotes (>=3.3.2)", "isort (==5.12.0)", "networkx (>=2.8.4)", "pandoc", "pre-commit (==2.13.0)", "pypandoc", "pyproject-flake8 (>=6.0.0.post1)", "rstr (>=3.2.0)"]
+full = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed (==0.5.19)", "amazon-kclpy (>=2.0.6,!=2.1.0)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.28.0)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "cryptography", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==5.0.0)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext[runtime] (==1.4.0)", "moto-ext[all] (==4.1.1.post3)", "opensearch-py (==2.1.1)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (>=23.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
+runtime = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed (==0.5.19)", "amazon-kclpy (>=2.0.6,!=2.1.0)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.28.0)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "cryptography", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==5.0.0)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext[runtime] (==1.4.0)", "moto-ext[all] (==4.1.1.post3)", "opensearch-py (==2.1.1)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (>=23.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
 test = ["coverage[toml] (>=5.5)", "deepdiff (>=5.5.0)", "jsonpath-ng (>=1.5.3)", "pytest (==6.2.4)", "pytest-httpserver (>=1.0.1)", "pytest-rerunfailures (==10.0)"]
 
 [[package]]
@@ -1313,13 +1313,13 @@ test = ["black", "coverage", "flake8", "isort", "localstack", "pytest"]
 
 [[package]]
 name = "localstack-ext"
-version = "1.3.1"
+version = "1.4.0"
 description = "Extensions for LocalStack"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "localstack-ext-1.3.1.tar.gz", hash = "sha256:ccc18a1932a899dbb2761380c5f89ffc269fd502621b69b18a0e1afbbf3d4897"},
+    {file = "localstack-ext-1.4.0.tar.gz", hash = "sha256:fee7ac1e207fe78c047dc59fe1ef415b566f7157c08000fbc860257d8c6ffba8"},
 ]
 
 [package.dependencies]
@@ -1336,9 +1336,9 @@ windows-curses = {version = "*", markers = "platform_system == \"Windows\""}
 
 [package.extras]
 package = ["python-minifier"]
-runtime = ["Js2Py (>=0.71)", "PyJWT (>=1.7.0)", "Whoosh (>=2.7.4)", "amazon.ion (>=0.9.3)", "avro (>=1.11.0)", "aws-encryption-sdk (>=3.1.0)", "dirtyjson (==1.0.7)", "docker (==5.0.0)", "docker-registry-client (>=0.5.2)", "dulwich (>=0.19.16)", "flask (>=1.0.2)", "graphql-core (>=3.0.3)", "janus (>=0.5.0)", "jsonpatch (>=1.32)", "kafka-python", "kubernetes (==21.7.0)", "localstack[runtime] (>=1.3.1.dev)", "moto-ext[all] (>=4.0.10.post1)", "paho-mqtt (>=1.5)", "parquet (>=1.3.1)", "parse (==1.19.0)", "pg8000 (>=1.10)", "postgres (>=2.2.2)", "postgresql-proxy (>=0.1.0)", "presto-python-client (>=0.7.0)", "pyftpdlib (>=1.5.6)", "pyhive[hive] (>=0.6.1)", "pyion2json (>=0.0.2)", "pyqldb (>=3.2,<4.0)", "python-snappy (>=0.6)", "readerwriterlock (>=1.0.7)", "rsa (>=4.0)", "sql-metadata (>=2.6.0)", "srp-ext (==1.0.7.1)", "testing.common.database (>=1.1.0)", "tornado (>=6.0)", "warrant-ext (>=0.6.2)", "websockets (>=8.1)"]
-test = ["Js2Py (>=0.71)", "aiohttp", "appdirs", "aws_xray_sdk (>=2.4.2)", "azure-common (>=1.1.26)", "azure-core (>=1.9.0)", "azure-devops (>=6.0.0b4)", "azure-functions (>=1.5.0)", "azure-identity (>=1.5.0)", "azure-mgmt-core (>=1.2.2)", "azure-mgmt-storage (>=16.0.0)", "azure-mgmt-web (>=1.0.0)", "azure-servicebus (>=7.0.1)", "azure-storage-blob (>=12.3.0)", "azure-storage-queue (>=12.1.1)", "black (==22.3.0)", "coverage[toml] (>=5.0.0)", "coveralls", "flake8 (==3.9.2)", "flake8-black (==0.3.2)", "flake8-isort (==5.0.0)", "flake8-quotes (>=0.11.0)", "gremlinpython (==3.5.1)", "isort (==5.9.1)", "jws (>=0.1.3)", "localstack[test] (>=1.3.1.dev)", "msal", "msal-extensions", "msrest", "neo4j", "nest-asyncio (>=1.4.1)", "packaging (<22)", "paramiko (>=2.11.0,<2.12.0)", "portalocker", "pre-commit (==2.13.0)", "pyarrow", "pyathena", "pykafka", "pymongo", "pymssql", "pymysql", "pyproject-flake8 (==3.9.2)", "pytest (==6.2.4)", "pytest-dependency (==0.5.1)", "pytest-httpserver (>=1.0.1)", "pytest-instafail (>=0.4.2)", "pytest-rerunfailures (==10.0)", "redis (==3.3.7)", "redshift_connector", "stomp.py (==8.0.1)"]
-test-overrides = ["localstack (>=1.3.1.dev)"]
+runtime = ["Js2Py (>=0.71)", "PyJWT (>=1.7.0)", "Whoosh (>=2.7.4)", "amazon.ion (>=0.9.3)", "avro (>=1.11.0)", "aws-encryption-sdk (>=3.1.0)", "dirtyjson (==1.0.7)", "docker (==5.0.0)", "docker-registry-client (>=0.5.2)", "dulwich (>=0.19.16)", "flask (>=1.0.2)", "graphql-core (>=3.0.3)", "janus (>=0.5.0)", "jsonpatch (>=1.32)", "kafka-python", "kubernetes (==21.7.0)", "localstack[runtime] (>=1.4.0.dev)", "moto-ext[all] (>=4.0.10.post1)", "paho-mqtt (>=1.5)", "parquet (>=1.3.1)", "parse (==1.19.0)", "pg8000 (>=1.10)", "postgres (>=2.2.2)", "postgresql-proxy (>=0.1.0)", "presto-python-client (>=0.7.0)", "pyftpdlib (>=1.5.6)", "pyhive[hive] (>=0.6.1)", "pyion2json (>=0.0.2)", "pyqldb (>=3.2,<4.0)", "python-snappy (>=0.6)", "readerwriterlock (>=1.0.7)", "rsa (>=4.0)", "sql-metadata (>=2.6.0)", "srp-ext (==1.0.7.1)", "testing.common.database (>=1.1.0)", "tornado (>=6.0)", "warrant-ext (>=0.6.2)", "websockets (>=8.1)"]
+test = ["Js2Py (>=0.71)", "aiohttp", "appdirs", "aws_xray_sdk (>=2.4.2)", "awswrangler (>=2.19.0)", "azure-common (>=1.1.26)", "azure-core (>=1.9.0)", "azure-devops (>=6.0.0b4)", "azure-functions (>=1.5.0)", "azure-identity (>=1.5.0)", "azure-mgmt-core (>=1.2.2)", "azure-mgmt-storage (>=16.0.0)", "azure-mgmt-web (>=1.0.0)", "azure-servicebus (>=7.0.1)", "azure-storage-blob (>=12.3.0)", "azure-storage-queue (>=12.1.1)", "black (==22.3.0)", "coverage[toml] (>=5.0.0)", "coveralls", "flake8 (>=6.0.0)", "flake8-black (>=0.3.6)", "flake8-isort (>=6.0.0)", "flake8-quotes (>=3.3.2)", "gremlinpython", "isort (==5.12.0)", "jws (>=0.1.3)", "localstack[test] (>=1.4.0.dev)", "msal", "msal-extensions", "msrest", "neo4j", "nest-asyncio (>=1.4.1)", "packaging (<22)", "paramiko (>=2.11.0,<2.12.0)", "portalocker", "pre-commit (==2.13.0)", "pyarrow", "pyathena", "pykafka", "pymongo", "pymssql", "pymysql", "pyproject-flake8 (==6.0.0.post1)", "pytest (==6.2.4)", "pytest-dependency (==0.5.1)", "pytest-httpserver (>=1.0.1)", "pytest-instafail (>=0.4.2)", "pytest-rerunfailures (==10.0)", "redis (==3.3.7)", "redshift_connector", "stomp.py (==8.0.1)"]
+test-overrides = ["localstack (>=1.4.0.dev)"]
 
 [[package]]
 name = "markdown-it-py"
@@ -2973,4 +2973,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a3e2344f3a09151af0f34f516db91b97081f4038e64d7dc467d02af2e512cf5b"
+content-hash = "16efe839002d2bb799694b361ee21740ee500b2d1b77b611564ff6b5ec93d978"
