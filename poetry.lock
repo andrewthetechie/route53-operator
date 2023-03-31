@@ -1263,23 +1263,61 @@ uvloop = ["uvloop"]
 
 [[package]]
 name = "localstack"
-version = "1.4.0"
+version = "2.0.0.post1"
 description = "LocalStack - A fully functional local Cloud stack"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "localstack-1.4.0-py3-none-any.whl", hash = "sha256:e1ebbef831450151f94c8d76b7c40bf4e336a2698ff4ac6a7634c210d458e6e5"},
-    {file = "localstack-1.4.0.tar.gz", hash = "sha256:d841044cfd5579f10431316ae30de9633b9e4a8fdd6eb6006eba6d7f4f1a3298"},
+    {file = "localstack-2.0.0.post1.tar.gz", hash = "sha256:b95a4bd16ceb0d7275ec011c770a0a6395fe1b4d6ee68f62ebf9efeea2efb81d"},
+]
+
+[package.dependencies]
+localstack-core = "*"
+localstack-ext = "2.0.0.post1"
+
+[package.extras]
+full = ["localstack-core[runtime]", "localstack-ext[runtime] (==2.0.0.post1)"]
+runtime = ["localstack-core[runtime]", "localstack-ext[runtime] (==2.0.0.post1)"]
+
+[[package]]
+name = "localstack-client"
+version = "2.0"
+description = "A lightweight Python client for LocalStack."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "localstack-client-2.0.tar.gz", hash = "sha256:33b80404b83575eb74c4bda174a0fe85fe7d9c403fa65a893dff3f316bdfb445"},
+]
+
+[package.dependencies]
+boto3 = "*"
+
+[package.extras]
+test = ["black", "coverage", "flake8", "isort", "localstack", "pytest"]
+
+[[package]]
+name = "localstack-core"
+version = "2.0.0.post1"
+description = "The core library and runtime of LocalStack"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "localstack-core-2.0.0.post1.tar.gz", hash = "sha256:94525ce392c7b1c607f40ef35efe289a092d52843390bf27e6d27da939aac9a3"},
+    {file = "localstack_core-2.0.0.post1-py3-none-any.whl", hash = "sha256:cf12f11e83efe7578a2a081739f1ace0e633d0bed0b7e9d98ad847b728f5e228"},
 ]
 
 [package.dependencies]
 apispec = ">=5.1.1"
-boto3 = ">=1.25.0"
+boto3 = ">=1.25.0,<1.26.98"
 cachetools = ">=5.0.0,<5.1.0"
 click = ">=7.0"
-localstack-client = ">=1.37"
-localstack-ext = "1.4.0"
+cryptography = "*"
+dill = "0.3.2"
+dnspython = ">=1.16.0"
+localstack-client = ">=2.0"
 plux = ">=1.3.1"
 psutil = ">=5.4.8,<6.0.0"
 python-dotenv = ">=0.19.1"
@@ -1291,44 +1329,27 @@ stevedore = ">=3.4.0"
 tailer = ">=0.4.1"
 
 [package.extras]
-dev = ["Cython", "autoflake", "black (==22.3.0)", "coveralls (==3.1.0)", "flake8 (>=6.0.0)", "flake8-black (>=0.3.6)", "flake8-isort (>=6.0.0)", "flake8-quotes (>=3.3.2)", "isort (==5.12.0)", "networkx (>=2.8.4)", "pandoc", "pre-commit (==2.13.0)", "pypandoc", "pyproject-flake8 (>=6.0.0.post1)", "rstr (>=3.2.0)"]
-full = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed (==0.5.19)", "amazon-kclpy (>=2.0.6,!=2.1.0)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.28.0)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "cryptography", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==5.0.0)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext[runtime] (==1.4.0)", "moto-ext[all] (==4.1.1.post3)", "opensearch-py (==2.1.1)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (>=23.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
-runtime = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed (==0.5.19)", "amazon-kclpy (>=2.0.6,!=2.1.0)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.28.0)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "cryptography", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==5.0.0)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext[runtime] (==1.4.0)", "moto-ext[all] (==4.1.1.post3)", "opensearch-py (==2.1.1)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (>=23.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
+dev = ["Cython", "autoflake", "black (==22.3.0)", "coveralls (>=3.3.1)", "flake8 (>=6.0.0)", "flake8-black (>=0.3.6)", "flake8-isort (>=6.0.0)", "flake8-quotes (>=3.3.2)", "isort (==5.12.0)", "networkx (>=2.8.4)", "pandoc", "pre-commit (==2.13.0)", "pypandoc", "pyproject-flake8 (>=6.0.0.post1)", "rstr (>=3.2.0)"]
+full = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed-ext (==0.5.19)", "amazon-kclpy (>=2.0.6,<2.1.0)", "antlr4-python3-runtime (==4.11.1)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.28.0,<1.29.98)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==6.0.1)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "json5 (==0.9.11)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "moto-ext[all] (==4.1.5.post2)", "opensearch-py (==2.1.1)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (>=23.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
+runtime = ["Quart (==0.17)", "Werkzeug (==2.1.2)", "airspeed-ext (==0.5.19)", "amazon-kclpy (>=2.0.6,<2.1.0)", "antlr4-python3-runtime (==4.11.1)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.22.90)", "awscrt (>=0.13.14)", "boto (>=2.49.0)", "botocore (>=1.28.0,<1.29.98)", "cbor2 (>=5.2.0)", "crontab (>=0.22.6)", "dnslib (>=0.9.10)", "dnspython (>=1.16.0)", "docker (==6.0.1)", "flask (==2.1.3)", "flask-cors (>=3.0.3,<3.1.0)", "flask-swagger (==0.2.12)", "hypercorn (==0.14.2)", "json5 (==0.9.11)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "moto-ext[all] (==4.1.5.post2)", "opensearch-py (==2.1.1)", "pproxy (>=2.7.0)", "pymongo (>=4.2.0)", "pyopenssl (>=23.0.0)", "readerwriterlock (>=1.0.7)", "requests-aws4auth (>=1.0)", "vosk (==0.3.43)", "xmltodict (>=0.11.0)"]
 test = ["coverage[toml] (>=5.5)", "deepdiff (>=5.5.0)", "jsonpath-ng (>=1.5.3)", "pytest (==6.2.4)", "pytest-httpserver (>=1.0.1)", "pytest-rerunfailures (==10.0)"]
 
 [[package]]
-name = "localstack-client"
-version = "1.39"
-description = "A lightweight Python client for LocalStack."
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "localstack-client-1.39.tar.gz", hash = "sha256:71124983d15418c90ec9a82c4bde0460b29c62896cd44527b4b3346f8d5f8a89"},
-]
-
-[package.dependencies]
-boto3 = "*"
-
-[package.extras]
-test = ["black", "coverage", "flake8", "isort", "localstack", "pytest"]
-
-[[package]]
 name = "localstack-ext"
-version = "1.4.0"
+version = "2.0.0.post1"
 description = "Extensions for LocalStack"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "localstack-ext-1.4.0.tar.gz", hash = "sha256:fee7ac1e207fe78c047dc59fe1ef415b566f7157c08000fbc860257d8c6ffba8"},
+    {file = "localstack-ext-2.0.0.post1.tar.gz", hash = "sha256:48afbe072f2bce07a1666e4f6324dd116abbbc3fdcb7eb4d84efffc5156f407f"},
 ]
 
 [package.dependencies]
-dill = "0.3.2"
+dill = ">=0.3.2"
 dnslib = ">=0.9.10"
 dnspython = ">=1.16.0"
-localstack = ">=1.3.1.dev"
+localstack-core = "2.0.0.post1"
 plux = ">=1.3.1"
 pyaes = ">=1.6.0"
 python-jose = {version = ">=3.1.0,<4.0.0", extras = ["cryptography"]}
@@ -1338,9 +1359,8 @@ windows-curses = {version = "*", markers = "platform_system == \"Windows\""}
 
 [package.extras]
 package = ["python-minifier"]
-runtime = ["Js2Py (>=0.71)", "PyJWT (>=1.7.0)", "Whoosh (>=2.7.4)", "amazon.ion (>=0.9.3)", "avro (>=1.11.0)", "aws-encryption-sdk (>=3.1.0)", "dirtyjson (==1.0.7)", "docker (==5.0.0)", "docker-registry-client (>=0.5.2)", "dulwich (>=0.19.16)", "flask (>=1.0.2)", "graphql-core (>=3.0.3)", "janus (>=0.5.0)", "jsonpatch (>=1.32)", "kafka-python", "kubernetes (==21.7.0)", "localstack[runtime] (>=1.4.0.dev)", "moto-ext[all] (>=4.0.10.post1)", "paho-mqtt (>=1.5)", "parquet (>=1.3.1)", "parse (==1.19.0)", "pg8000 (>=1.10)", "postgres (>=2.2.2)", "postgresql-proxy (>=0.1.0)", "presto-python-client (>=0.7.0)", "pyftpdlib (>=1.5.6)", "pyhive[hive] (>=0.6.1)", "pyion2json (>=0.0.2)", "pyqldb (>=3.2,<4.0)", "python-snappy (>=0.6)", "readerwriterlock (>=1.0.7)", "rsa (>=4.0)", "sql-metadata (>=2.6.0)", "srp-ext (==1.0.7.1)", "testing.common.database (>=1.1.0)", "tornado (>=6.0)", "warrant-ext (>=0.6.2)", "websockets (>=8.1)"]
-test = ["Js2Py (>=0.71)", "aiohttp", "appdirs", "aws_xray_sdk (>=2.4.2)", "awswrangler (>=2.19.0)", "azure-common (>=1.1.26)", "azure-core (>=1.9.0)", "azure-devops (>=6.0.0b4)", "azure-functions (>=1.5.0)", "azure-identity (>=1.5.0)", "azure-mgmt-core (>=1.2.2)", "azure-mgmt-storage (>=16.0.0)", "azure-mgmt-web (>=1.0.0)", "azure-servicebus (>=7.0.1)", "azure-storage-blob (>=12.3.0)", "azure-storage-queue (>=12.1.1)", "black (==22.3.0)", "coverage[toml] (>=5.0.0)", "coveralls", "flake8 (>=6.0.0)", "flake8-black (>=0.3.6)", "flake8-isort (>=6.0.0)", "flake8-quotes (>=3.3.2)", "gremlinpython", "isort (==5.12.0)", "jws (>=0.1.3)", "localstack[test] (>=1.4.0.dev)", "msal", "msal-extensions", "msrest", "neo4j", "nest-asyncio (>=1.4.1)", "packaging (<22)", "paramiko (>=2.11.0,<2.12.0)", "portalocker", "pre-commit (==2.13.0)", "pyarrow", "pyathena", "pykafka", "pymongo", "pymssql", "pymysql", "pyproject-flake8 (==6.0.0.post1)", "pytest (==6.2.4)", "pytest-dependency (==0.5.1)", "pytest-httpserver (>=1.0.1)", "pytest-instafail (>=0.4.2)", "pytest-rerunfailures (==10.0)", "redis (==3.3.7)", "redshift_connector", "stomp.py (==8.0.1)"]
-test-overrides = ["localstack (>=1.4.0.dev)"]
+runtime = ["Js2Py (>=0.71)", "PyJWT (>=1.7.0)", "Whoosh (>=2.7.4)", "amazon.ion (>=0.9.3,<0.10)", "avro (>=1.11.0)", "aws-encryption-sdk (>=3.1.0)", "dirtyjson (==1.0.7)", "docker (>=6.0.1)", "docker-registry-client (>=0.5.2)", "dulwich (>=0.19.16)", "flask (>=1.0.2)", "graphql-core (>=3.0.3)", "janus (>=0.5.0)", "jsonpatch (>=1.32)", "kafka-python", "kubernetes (==21.7.0)", "localstack-core[runtime] (==2.0.0.post1)", "localstack-plugin-persistence (>=0.1.3)", "moto-ext[all]", "paho-mqtt (>=1.5)", "parquet (>=1.3.1)", "parse (==1.19.0)", "pg8000 (>=1.10)", "postgres (>=2.2.2)", "postgresql-proxy (>=0.1.0)", "presto-python-client (>=0.7.0)", "pyftpdlib (>=1.5.6)", "pyhive[hive] (>=0.6.1)", "pyion2json (>=0.0.2)", "pyqldb (>=3.2,<4.0)", "python-snappy (>=0.6)", "readerwriterlock (>=1.0.7)", "rsa (>=4.0)", "sql-metadata (>=2.6.0)", "srp-ext (==1.0.7.1)", "testing.common.database (>=1.1.0)", "tornado (>=6.0)", "warrant-ext (>=0.6.2)", "websockets (>=8.1)"]
+test = ["Js2Py (>=0.71)", "aiohttp", "aws_xray_sdk (>=2.4.2)", "awsiotsdk", "awswrangler (>=2.19.0)", "black (==22.3.0)", "coverage[toml] (>=5.0.0)", "coveralls (>=3.3.1)", "deepdiff (>=5.5.0)", "flake8 (>=6.0.0)", "flake8-black (>=0.3.6)", "flake8-isort (>=6.0.0)", "flake8-quotes (>=3.3.2)", "gremlinpython", "isort (==5.12.0)", "jws (>=0.1.3)", "localstack-core[test] (==2.0.0.post1)", "msal", "msal-extensions", "msrest", "mysql-connector-python", "neo4j", "nest-asyncio (>=1.4.1)", "packaging (<22)", "paramiko (>=2.11.0,<2.12.0)", "portalocker", "pre-commit (==2.13.0)", "pyarrow", "pyathena", "pykafka", "pymongo", "pymssql", "pyproject-flake8 (==6.0.0.post1)", "pytest (==6.2.4)", "pytest-dependency (==0.5.1)", "pytest-httpserver (>=1.0.1)", "pytest-instafail (>=0.4.2)", "pytest-rerunfailures (==10.0)", "pytest-split (>=0.8.0)", "python-terraform", "redis (==3.3.7)", "redshift_connector", "stomp.py (==8.0.1)"]
 
 [[package]]
 name = "markdown-it-py"
@@ -2975,4 +2995,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1ad1ad3daef557fa7ba3e27a758710d5cb83f2f636f0a5e5d554375b94ce783c"
+content-hash = "a422f5f646e288d49ca24386b4e489a1d2901d0048af6f0678c9bedc69905db3"
