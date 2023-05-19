@@ -34,7 +34,7 @@ bandit = "^1.7.5"
 pytest-kind = "^22.11.1"
 localstack = "^2.0.2"
 awscli-local = "^0.20"
-moto = {extras = ["server","s3","sqs","lambda","dynamodb","cloudformation", "sns", "batch", "ec2", "rds"],version = "~=4.1.6"}
+moto = {extras = ["server","s3","sqs","lambda","dynamodb","cloudformation", "sns", "batch", "ec2", "rds"],version = "~=4.1.9"}
 ruff = "^0.0.269"
 docker = "^6.1.2"
 
