@@ -14,7 +14,7 @@ Changelog = "https://github.com/andrewthetechie/route53-operator/releases"
 python = "^3.11"
 kopf = "^1.36.1"
 aiobotocore = "^2.5.2"
-pykube-ng = "^22.9.0"
+pykube-ng = "^23.6.0"
 pydantic = "^1.10.9"
 
 [tool.poetry.group.dev.dependencies]
