@@ -15,7 +15,7 @@ python = "^3.11"
 kopf = "^1.36.1"
 aiobotocore = "^2.5.2"
 pykube-ng = "^22.9.0"
-pydantic = "^1.10.9"
+pydantic = "^2.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
