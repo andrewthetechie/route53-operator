@@ -195,12 +195,12 @@ wrapt = "*"
 
 [[package]]
 name = "awscli-local"
-version = "0.20"
+version = "0.22.0"
 description = "Thin wrapper around the \"aws\" command line interface for use with LocalStack"
 optional = false
 python-versions = "*"
 files = [
-    {file = "awscli-local-0.20.tar.gz", hash = "sha256:8694445f4fcf11e1ed15c0cf47150b85f5904cc6f27ae8157043b89cf9f4b16a"},
+    {file = "awscli-local-0.22.0.tar.gz", hash = "sha256:3807cf2ee4bbdd4df4dfc8bef027f25bde523dcaf8119720f677ed95ebba66a4"},
 ]
 
 [package.dependencies]
@@ -2854,4 +2854,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "dfd98da9cbc61f7fdbf7522e60cb262c7bf930aa90c968a859d52d3ace007352"
+content-hash = "7110e9adb791020f2af7302c6249a2e833f604d92d468a0181acba3322ccc378"
